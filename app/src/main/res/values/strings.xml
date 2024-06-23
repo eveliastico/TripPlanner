@@ -1,0 +1,27 @@
+<resources>
+    <!-- STRINGS DE NUEVO VIAJE -->
+    <string name="app_name">TripPlanner</string>
+    <string name="nuevo_viaje">Nuevo Viaje</string>
+    <string name="destino">Destino</string>
+    <string name="actividades">Actividades Planeadas</string>
+    <string name="presupuesto">Presupuesto Estimado</string>
+    <string name="fecha_inicio">Fecha De Inicio</string>
+    <string name="guardar">Guardar</string>
+
+    <!-- STRINGS DE REPORTES -->
+    <string name="reportes">Reportes</string>
+    <string name="reportes_presupuesto"></string>
+
+    <!-- STRINGS DE DETALLES DE VUELO -->
+    <string name="vuelo">Vuelo: </string>
+    <string name="detalles_presupuesto">Presupuesto</string>
+    <string name="comida">Comida</string>
+    <string name="transporte">Transporte</string>
+    <string name="detalles_actividades">Actividades</string>
+    <string name="informacion_general">Informacion General</string>
+    <string name="fecha_viaje">Fecha De Viaje</string>
+    <string name="dias_restantes">Dias Restantes</string>
+    <string name="precio">Costo</string>
+    
+
+</resources>

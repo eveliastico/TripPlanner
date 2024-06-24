@@ -9,51 +9,25 @@ import java.time.LocalDate
 
 class NuevoViaje : AppCompatActivity() {
 
-    private val viajesList = mutableListOf<Viaje>()
-    private lateinit var txtDestino: EditText
-    private lateinit var txtPresupuesto: EditText
-    private lateinit var calendarView: CalendarView
-    private lateinit var btnGuardarViaje: Button
-    private var fechaInicio: LocalDate? = null
+    lateinit var etDate: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nuevo_viaje)
 
-        txtDestino = findViewById(R.id.txtDestino)
-        txtPresupuesto = findViewById(R.id.txtPresupuesto)
-        calendarView = findViewById(R.id.calendarView)
-        btnGuardarViaje = findViewById(R.id.btn_guardarViaje)
+        etDate = findViewById(R.id.etDate)
 
-        // Obtener la fecha seleccionada del CalendarView
-        calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            fechaInicio = LocalDate.of(year, month + 1, dayOfMonth)
-        }
-
-        btnGuardarViaje.setOnClickListener {
-            guardarViaje()
+        etDate.setOnClickListener {
+            showDatePickerDialog()
         }
     }
 
-    private fun guardarViaje() {
-        val destino = txtDestino.text.toString()
-        val presupuestoEstimado = txtPresupuesto.text.toString().toFloatOrNull() ?: 0.0f
+    private fun showDatePickerDialog() {
+        val datePicker = DatePickerFragment { day, month, year -> onDateSelected(day, month, year) }
+        datePicker.show(supportFragmentManager, "datePicker")
+    }
 
-        val actividades = listOf(
-            Actividad("Ejemplo de actividad", 100.0f)
-        )
-
-        if (destino.isNotEmpty() && fechaInicio != null) {
-            val nuevoViaje = Viaje(
-                destino = destino,
-                actividades = actividades,
-                presupuestoEstimado = presupuestoEstimado,
-                fechaInicio = fechaInicio!!
-            )
-
-            viajesList.add(nuevoViaje)
-        } else {
-
-        }
+    private fun onDateSelected(day: Int, month: Int, year: Int) {
+        etDate.setText("$day/$month/$year")
     }
 }

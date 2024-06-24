@@ -88,13 +88,14 @@
         android:text="@string/fecha_inicio"
         android:textSize="15dp" />
 
-    <CalendarView
-        android:id="@+id/calendarView"
+    <EditText
+        android:id="@+id/etDate"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:hint="Selecciona la fecha programada"/>
 
     <Button
         android:id="@+id/btn_guardarViaje"

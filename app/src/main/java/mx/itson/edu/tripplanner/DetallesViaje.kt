@@ -2,42 +2,61 @@ package mx.itson.edu.tripplanner
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.utils.ColorTemplate
-
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
 class DetallesViaje : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalles_viaje)
 
-        val pieChart = findViewById<PieChart>(R.id.pieChart)
+        val linearLayoutActivitiesContainer: LinearLayout = findViewById(R.id.linearLayoutActivitiesContainer)
+        val btnAddActivity: Button = findViewById(R.id.btn_addActivity)
 
-        // Datos de ejemplo
-        val entries = ArrayList<PieEntry>()
-        entries.add(PieEntry(30f, "Category 1"))
-        entries.add(PieEntry(20f, "Category 2"))
-        entries.add(PieEntry(50f, "Category 3"))
+        btnAddActivity.setOnClickListener {
+            addActivityField(linearLayoutActivitiesContainer)
+        }
+    }
 
-        val dataSet = PieDataSet(entries, "Example Data")
-        dataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
+    private fun addActivityField(container: LinearLayout) {
+        // Crea un nuevo LinearLayout horizontal para la actividad y el precio
+        val newActivityLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(20, 5, 20, 5)
+            }
+        }
 
-        val data = PieData(dataSet)
-        pieChart.data = data
+        // Crea un nuevo EditText para la actividad
+        val newActivityEditText = EditText(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                2f
+            )
+            hint = "Actividad"
+        }
 
-        // Configuración opcional
-        pieChart.setUsePercentValues(true)
-        pieChart.description.isEnabled = false
-        pieChart.setDrawHoleEnabled(false)
-        pieChart.setEntryLabelColor(Color.BLACK)
-        pieChart.setEntryLabelTextSize(12f)
-        pieChart.animateY(1000)
+        // Crea un nuevo EditText para el precio
+        val newPriceEditText = EditText(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1f
+            )
+            hint = "Costo"
+        }
 
-        // Refresca el gráfico
-        pieChart.invalidate()
+        // Añade los EditTexts al nuevo LinearLayout
+        newActivityLayout.addView(newActivityEditText)
+        newActivityLayout.addView(newPriceEditText)
 
+        // Añade el nuevo LinearLayout al contenedor
+        container.addView(newActivityLayout)
     }
 
 

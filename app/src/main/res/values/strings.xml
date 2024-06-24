@@ -3,7 +3,7 @@
     <string name="app_name">TripPlanner</string>
     <string name="nuevo_viaje">Nuevo Viaje</string>
     <string name="destino">Destino</string>
-    <string name="actividades">Actividades Planeadas</string>
+    <string name="actividades">Actividades</string>
     <string name="presupuesto">Presupuesto Estimado</string>
     <string name="fecha_inicio">Fecha De Inicio</string>
     <string name="guardar">Guardar</string>

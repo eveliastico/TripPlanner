@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/titulo"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:textColor="@color/letra"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/ingresa"
+        android:textSize="32sp"
+        android:textStyle="normal"
+        android:textColor="@color/letra"
+        android:layout_marginBottom="12dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/letsStart"
+        android:textSize="18sp"
+        android:textColor="@color/letra"
+        android:layout_marginBottom="32dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:hint="@string/emailLogIn"
+        android:inputType="textEmailAddress"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:hint="@string/passwordLogIn"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:drawablePadding="16dp"
+        android:layout_marginBottom="32dp"/>
+
+    <Button
+        android:id="@+id/btnLogIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/logIn"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:padding="16dp"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/question"
+        android:textColor="@color/letra"
+        android:textSize="16sp"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/btnRegistrate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/registrar"
+        android:textSize="16sp"
+        android:textColor="@color/azul_fuerte"/>
+
+</LinearLayout>

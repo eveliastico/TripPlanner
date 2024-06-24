@@ -22,6 +22,31 @@
     <string name="fecha_viaje">Fecha De Viaje</string>
     <string name="dias_restantes">Dias Restantes</string>
     <string name="precio">Costo</string>
-    
+
+    <!-- STRINGS LOG IN -->
+    <string name="titulo">Trip Planner</string>
+    <string name="ingresa">Ingresa</string>
+    <string name="letsStart">Empieza a planear tus viajes</string>
+    <string name="emailLogIn">E-Mail</string>
+    <string name="passwordLogIn">Contraseña</string>
+    <string name="logIn">Iniciar sesión</string>
+    <string name="question">¿Aún no te registras?</string>
+    <string name="registrar">Registrate</string>
+
+    <!-- STRINGS SIGN IN -->
+    <string name="tituloSignIn">Registrate</string>
+    <string name="nombre">Nombre</string>
+    <string name="telefono">Número telefónico</string>
+    <string name="emailSignIn">E-Mail</string>
+    <string name="passwordSignIn">Contraseña</string>
+    <string name="terminos">Acepto los términos de servicio y la política de privacidad</string>
+    <string name="signIn">Registrarme</string>
+    <string name="questionSignIn">¿Ya tienes una cuenta?</string>
+    <string name="ingresar">Ingresa</string>
+
+    <!-- STRINGS DE MIS VIAJES -->
+    <string name="tituloMisViajes">Mis Viajes</string>
+    <string name="busquedaViaje">Buscar Viaje</string>
+
 
 </resources>

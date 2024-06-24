@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/tituloSignIn"
+        android:textSize="30sp"
+        android:textStyle="normal"
+        android:textColor="@color/letra"
+        android:layout_marginTop="54dp"
+        android:layout_marginBottom="24dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:hint="@string/nombre"
+        android:inputType="textPersonName"
+        android:textSize="18sp"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:hint="@string/telefono"
+        android:inputType="phone"
+        android:textSize="18sp"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:hint="@string/emailSignIn"
+        android:inputType="textEmailAddress"
+        android:textSize="18sp"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:hint="@string/passwordSignIn"
+        android:inputType="textPassword"
+        android:textSize="18sp"
+        android:padding="16dp"
+        android:layout_marginBottom="24dp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/terminos"
+        android:textSize="14sp"
+        android:textColor="@color/letra"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/signIn"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/questionSignIn"
+        android:textColor="@color/letra"
+        android:textSize="16sp"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/btnIngresa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/ingresa"
+        android:textSize="16sp"
+        android:textColor="@color/azul_fuerte"
+
+</LinearLayout>

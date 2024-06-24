@@ -6,5 +6,6 @@
     <color name="azul_fuerte">#102C57</color>
     <color name="azul_bajo">#1679AB</color>
     <color name="letra">#3C5B6F</color>
+    <color name="gris_claro">#F0F0F0</color>
 
 </resources>

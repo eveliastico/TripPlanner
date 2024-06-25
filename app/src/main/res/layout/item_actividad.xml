@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/txtActividad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="KAYAK"
+        android:textSize="20sp"
+        android:textStyle="normal"/>
+
+    <TextView
+        android:id="@+id/txtCosto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:layout_weight="1"
+        android:text="$51"
+        android:textSize="20sp"
+        android:textStyle="normal"/>
+
+    <ImageButton
+        android:id="@+id/btnAddActividad"
+        android:layout_width="5dp"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:src="@drawable/ic_add"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Añadir viaje"/>
+
+    <ImageButton
+        android:id="@+id/btnRemoveActividad"
+        android:layout_width="5dp"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:src="@drawable/ic_remove"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Añadir viaje"/>
+
+
+</LinearLayout>

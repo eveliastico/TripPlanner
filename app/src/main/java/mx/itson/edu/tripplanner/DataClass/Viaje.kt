@@ -1,4 +1,4 @@
-package mx.itson.edu.tripplanner
+package mx.itson.edu.tripplanner.DataClass
 
 import java.time.LocalDate
 

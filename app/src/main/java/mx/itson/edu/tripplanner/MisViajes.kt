@@ -4,10 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import mx.itson.edu.tripplanner.Adapter.ActividadesAdapter
 import mx.itson.edu.tripplanner.Adapter.MisViajesAdapter
+import mx.itson.edu.tripplanner.DataClass.Viaje
 import mx.itson.edu.tripplanner.DataProvider.ActividadesProvider
 import mx.itson.edu.tripplanner.DataProvider.ViajesProvider
 
@@ -32,6 +34,14 @@ class MisViajes : AppCompatActivity() {
     fun initRecyclerView(){
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerMisViajes)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = MisViajesAdapter(ViajesProvider.viajesList)
+        recyclerView.adapter = MisViajesAdapter(ViajesProvider.viajesList) {viaje ->
+            onItemSelected(
+                viaje
+            )
+        }
+    }
+
+    fun onItemSelected(viaje: Viaje){
+        Toast.makeText(this, viaje.destino, Toast.LENGTH_SHORT).show()
     }
 }

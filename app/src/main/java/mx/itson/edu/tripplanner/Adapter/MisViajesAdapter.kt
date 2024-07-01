@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import mx.itson.edu.tripplanner.DataClass.Viaje
 import mx.itson.edu.tripplanner.R
 
-class MisViajesAdapter(private val viajesList:List<Viaje>) : RecyclerView.Adapter<MisViajesViewHolder>() {
+class MisViajesAdapter(private val viajesList:List<Viaje>, private val onClickListener:(Viaje)-> Unit ) : RecyclerView.Adapter<MisViajesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MisViajesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return MisViajesViewHolder(layoutInflater.inflate(R.layout.item_mis_viajes, parent, false))
@@ -20,6 +20,6 @@ class MisViajesAdapter(private val viajesList:List<Viaje>) : RecyclerView.Adapte
     // render de la clase MisViajesViewHolder
     override fun onBindViewHolder(holder: MisViajesViewHolder, position: Int) {
         val item = viajesList[position]
-        holder.render(item)
+        holder.render(item, onClickListener)
     }
 }

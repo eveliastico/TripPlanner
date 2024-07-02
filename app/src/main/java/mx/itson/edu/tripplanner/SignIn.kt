@@ -7,11 +7,21 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.FirebaseDatabase
 
 class SignIn : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
 
         val btnSignIn: Button = findViewById(R.id.btnSignIn) as Button
         val btnIngresa: Button = findViewById(R.id.btnIngresa) as Button
@@ -23,12 +33,14 @@ class SignIn : AppCompatActivity() {
 
 
         btnSignIn.setOnClickListener {
-            if (validateInputs(etNombre, etTelefono, etEmail, etPassword, cbTerminos)) {
-                Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, LogIn::class.java)
+            val nombre = etNombre.text.toString()
+            val email = etEmail.text.toString()
+            val password = etPassword.text.toString()
+            val telefono = etTelefono.text.toString()
+            val terminosAceptados = cbTerminos.isChecked
 
-                startActivity(intent)
-                finish()
+            if (validateInputs(nombre, telefono, email, password, terminosAceptados)){
+                registerUser(nombre, email, password, telefono)
             }
         }
 
@@ -40,49 +52,62 @@ class SignIn : AppCompatActivity() {
 
     }
 
-    private fun validateInputs( etNombre: EditText, etTelefono: EditText, etEmail: EditText, etPassword: EditText, cbTerminos: CheckBox): Boolean {
+    private fun registerUser(name: String, email: String, password: String, phone: String) {
 
-            val nombre = etNombre.text.toString().trim()
-            val telefono = etTelefono.text.toString().trim()
-            val email = etEmail.text.toString().trim()
-            val password = etPassword.text.toString()
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this){ task ->
 
-            if (nombre.isEmpty()) {
-                etNombre.error = "El nombre no puede estar vacío"
-                return false
+            if (task.isSuccessful){
+                val user = auth.currentUser
+                user?.let {
+                    saverUserToDatabase(it.uid, name, email, phone)
+                }
+            } else {
+                val errorMessage = task.exception?.message ?: "Error desconocido"
+                Toast.makeText(baseContext, "Authentication Failed $errorMessage", Toast.LENGTH_SHORT).show()
+
             }
 
-            if (telefono.isEmpty()) {
-                etTelefono.error = "El teléfono no puede estar vacío"
-                return false
-            }
-
-            if (!android.util.Patterns.PHONE.matcher(telefono).matches()) {
-                etTelefono.error = "Ingrese un número de teléfono válido"
-                return false
-            }
-
-            if (email.isEmpty()) {
-                etEmail.error = "El correo electrónico no puede estar vacío"
-                return false
-            }
-
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                etEmail.error = "Ingrese un correo electrónico válido"
-                return false
-            }
-
-            if (password.isEmpty()) {
-                etPassword.error = "La contraseña no puede estar vacía"
-                return false
-            }
-
-            if (!cbTerminos.isChecked) {
-                Toast.makeText(this, "Debe aceptar los términos y condiciones", Toast.LENGTH_SHORT)
-                    .show()
-                return false
-            }
-
-            return true
         }
+
+    }
+
+    private fun saverUserToDatabase(userId: String, name: String, email: String, phone: String){
+        val userRef = database.getReference("users").child(userId)
+        val userData = HashMap<String, Any>()
+        userData["name"] = name
+        userData["email"] = email
+        userData["phone"] = phone
+
+        userRef.setValue(userData).addOnSuccessListener {
+            Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, LogIn::class.java)
+            startActivity(intent)
+            finish()
+        }
+            .addOnFailureListener{ e ->
+                val errorMessage = e.message ?: "Error desconocido"
+                Toast.makeText(this, "Error al guardar datos: $errorMessage", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun validateInputs(nombre: String, telefono: String, email: String, password: String, terminosAceptados: Boolean): Boolean{
+        if (nombre.isEmpty() || telefono.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Email inválido", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (password.length < 6) {
+            Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (!terminosAceptados) {
+            Toast.makeText(this, "Debes aceptar los términos y condiciones", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+
 }

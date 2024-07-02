@@ -8,7 +8,7 @@
         android:id="@+id/txtActividad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="8"
+        android:layout_weight="5"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="KAYAK"
@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/txtCosto"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-condensed-medium"

@@ -5,15 +5,19 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import mx.itson.edu.tripplanner.DataClass.Actividad
 import mx.itson.edu.tripplanner.R
+import mx.itson.edu.tripplanner.databinding.ItemActividadBinding
 
 class ActividadesViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
-    val actividad = view.findViewById<TextView>(R.id.txtActividad)
-    val costo = view.findViewById<TextView>(R.id.txtCosto)
+    val binding = ItemActividadBinding.bind(view)
+
+    //Ya no se ocupa crear todos estos valores por q solo se llama al binding.
+    //val actividad = view.findViewById<TextView>(R.id.txtActividad)
+    //val costo = view.findViewById<TextView>(R.id.txtCosto)
 
     fun render(actvidadModel: Actividad){
-        actividad.text = actvidadModel.nombre
-        costo.text = actvidadModel.costo.toString()
+        binding.txtActividad.text = actvidadModel.nombre
+        binding.txtCosto.text = actvidadModel.costo.toString()
     }
 
 }

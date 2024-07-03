@@ -3,20 +3,37 @@ package mx.itson.edu.tripplanner
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import mx.itson.edu.tripplanner.Adapter.ActividadesAdapter
+import mx.itson.edu.tripplanner.DataClass.Viaje
 import mx.itson.edu.tripplanner.DataProvider.ActividadesProvider
+import mx.itson.edu.tripplanner.DataProvider.ViajesProvider
 import mx.itson.edu.tripplanner.Utilities.CustomCircleDrawable
+import mx.itson.edu.tripplanner.databinding.ActivityDetallesViajeBinding
 
 class DetallesViaje : AppCompatActivity() {
+
+    private lateinit var binding: ActivityDetallesViajeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detalles_viaje)
-
-
+        binding = ActivityDetallesViajeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initRecyclerView()
         initGraphs()
+
+        val idViaje = intent.getLongExtra("ID", -1)
+
+        for (viaje in ViajesProvider.viajesList){
+            if(viaje.id == idViaje){
+                binding.txtDestino.text = viaje.destino
+                binding.txtFecha.text = viaje.fechaInicio.toString()
+                break
+            }
+        }
+
     }
 
     fun initRecyclerView(){

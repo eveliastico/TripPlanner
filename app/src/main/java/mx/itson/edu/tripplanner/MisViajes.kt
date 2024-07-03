@@ -12,14 +12,17 @@ import mx.itson.edu.tripplanner.Adapter.MisViajesAdapter
 import mx.itson.edu.tripplanner.DataClass.Viaje
 import mx.itson.edu.tripplanner.DataProvider.ActividadesProvider
 import mx.itson.edu.tripplanner.DataProvider.ViajesProvider
+import mx.itson.edu.tripplanner.databinding.ActivityMisViajesBinding
 
 class MisViajes : AppCompatActivity() {
 
     lateinit var btnAddViaje: ImageButton
+    private lateinit var binding: ActivityMisViajesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mis_viajes)
+        binding = ActivityMisViajesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         btnAddViaje = findViewById(R.id.btnAddViaje) as ImageButton
 
@@ -32,16 +35,24 @@ class MisViajes : AppCompatActivity() {
 
     }
     fun initRecyclerView(){
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerMisViajes)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = MisViajesAdapter(ViajesProvider.viajesList) {viaje ->
-            onItemSelected(
-                viaje
-            )
-        }
+        binding.recyclerMisViajes.layoutManager = LinearLayoutManager(this)
+        binding.recyclerMisViajes.adapter =
+            MisViajesAdapter(ViajesProvider.viajesList) {viaje ->
+                onItemSelected(
+                    viaje
+                )
+            }
     }
 
     fun onItemSelected(viaje: Viaje){
         Toast.makeText(this, viaje.destino, Toast.LENGTH_SHORT).show()
+        navigateToDetallesViajeById(viaje)
+    }
+
+    private fun navigateToDetallesViajeById(viaje: Viaje){
+        val intent = Intent(this, DetallesViaje::class.java).apply {
+            putExtra("ID", viaje.id)
+        }
+        startActivity(intent)
     }
 }

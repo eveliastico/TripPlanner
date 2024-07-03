@@ -9,15 +9,12 @@ import mx.itson.edu.tripplanner.databinding.ItemActividadBinding
 
 class ActividadesViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
-    val binding = ItemActividadBinding.bind(view)
-
-    //Ya no se ocupa crear todos estos valores por q solo se llama al binding.
-    //val actividad = view.findViewById<TextView>(R.id.txtActividad)
-    //val costo = view.findViewById<TextView>(R.id.txtCosto)
+    val actividad = view.findViewById<TextView>(R.id.txtActividad)
+    val costo = view.findViewById<TextView>(R.id.txtCosto)
 
     fun render(actvidadModel: Actividad){
-        binding.txtActividad.text = actvidadModel.nombre
-        binding.txtCosto.text = actvidadModel.costo.toString()
+        actividad.text = actvidadModel.nombre
+        costo.text = actvidadModel.costo.toString()
     }
 
 }

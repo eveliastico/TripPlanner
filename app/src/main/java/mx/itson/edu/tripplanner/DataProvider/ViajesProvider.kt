@@ -8,6 +8,7 @@ class ViajesProvider {
     companion object{
         val viajesList = listOf<Viaje>(
             Viaje(
+                1,
                 "CANADA",
                 listOf(
                     Actividad("KAYAK", 100f),
@@ -17,6 +18,7 @@ class ViajesProvider {
                 LocalDate.of(2023, 12, 8)
             ),
             Viaje(
+                2,
                 "MEXICO",
                 listOf(
                     Actividad("KAYAK", 100f),
@@ -26,6 +28,7 @@ class ViajesProvider {
                 LocalDate.of(2023, 12, 8)
             ),
             Viaje(
+                3,
                 "EUA",
                 listOf(
                     Actividad("KAYAK", 100f),
@@ -35,6 +38,7 @@ class ViajesProvider {
                 LocalDate.of(2023, 12, 8)
             ),
             Viaje(
+                4,
                 "FRANCIA",
                 listOf(
                     Actividad("KAYAK", 100f),

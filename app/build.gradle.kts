@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -34,8 +35,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    viewBinding{
+    viewBinding {
         enable = true
     }
 }

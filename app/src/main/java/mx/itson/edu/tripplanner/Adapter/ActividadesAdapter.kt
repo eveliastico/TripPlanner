@@ -6,22 +6,25 @@ import androidx.recyclerview.widget.RecyclerView
 import mx.itson.edu.tripplanner.DataClass.Actividad
 import mx.itson.edu.tripplanner.R
 
-class ActividadesAdapter(private var actividadesList:List<Actividad>) : RecyclerView.Adapter<ActividadesViewHolder>(){
+class ActividadesAdapter(
+    private var actividades:List<Actividad> = emptyList(),
+    private val onRemoveClick: (Actividad) -> Unit,
+    private val onAddClick: () -> Unit
+) : RecyclerView.Adapter<ActividadesViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActividadesViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        return ActividadesViewHolder(layoutInflater.inflate(R.layout.item_actividad, parent, false))
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_actividad, parent, false)
+        return ActividadesViewHolder(view, onRemoveClick, onAddClick)
     }
-
-    override fun getItemCount(): Int = actividadesList.size
 
     override fun onBindViewHolder(holder: ActividadesViewHolder, position: Int) {
-        val item = actividadesList[position]
-        holder.render(item)
+        holder.bind(actividades[position])
     }
 
+    override fun getItemCount() = actividades.size
+
     fun updateActividades(newActividades: List<Actividad>) {
-        actividadesList = newActividades
+        actividades = newActividades.toList()
         notifyDataSetChanged()
     }
 

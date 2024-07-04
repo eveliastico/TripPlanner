@@ -8,7 +8,7 @@ data class Viaje(
     var id: String = "",
     var userId: String = "",
     var destino:String = "",
-    var actividades: List<Actividad> = listOf(),
+    var actividades: List<Actividad> = emptyList(),
     var presupuestoEstimado:Float = 0f,
     var fechaInicio: String = ""
 )

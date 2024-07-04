@@ -2,9 +2,12 @@ package mx.itson.edu.tripplanner
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -14,6 +17,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import mx.itson.edu.tripplanner.Adapter.ActividadesAdapter
+import mx.itson.edu.tripplanner.DataClass.Actividad
 import mx.itson.edu.tripplanner.DataClass.Viaje
 import mx.itson.edu.tripplanner.Utilities.CustomCircleDrawable
 import mx.itson.edu.tripplanner.databinding.ActivityDetallesViajeBinding
@@ -50,7 +54,11 @@ class DetallesViaje : AppCompatActivity() {
 
     fun initRecyclerView(){
         binding.recyclerDetallesViajes.layoutManager = LinearLayoutManager(this)
-        actividadesAdapter = ActividadesAdapter(emptyList())
+        actividadesAdapter = ActividadesAdapter(
+            emptyList(),
+            onRemoveClick = {actividad -> showRemoveActividadDialog(actividad) },
+            onAddClick = {showAddActividadDialog()}
+        )
         binding.recyclerDetallesViajes.adapter = actividadesAdapter
     }
 
@@ -65,20 +73,102 @@ class DetallesViaje : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val viaje = snapshot.getValue(Viaje::class.java)
                 viaje?.let {
-                    updateUI(it)
+                    runOnUiThread {
+                        updateUI(it)
+                    }
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@DetallesViaje, "Error al cargar datos: ${error.message}", Toast.LENGTH_SHORT).show()
+                runOnUiThread {
+                    Toast.makeText(
+                        this@DetallesViaje,
+                        "Error al cargar datos: ${error.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         })
     }
 
+    private fun showAddActividadDialog(){
+        val dialogView = layoutInflater.inflate(R.layout.dialog_add_actividad, null)
+        val etActividad = dialogView.findViewById<EditText>(R.id.etActividad)
+
+        AlertDialog.Builder(this)
+            .setTitle("Agregar Actividad")
+            .setView(dialogView)
+            .setPositiveButton("Agregar"){ _, _ ->
+                val input = etActividad.text.toString()
+                addNewActividad(input)
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun addNewActividad(input: String) {
+            val parts = input.split(":")
+            if (parts.size == 2) {
+                val nombre = parts[0].trim()
+                val costo = parts[1].trim().toFloatOrNull() ?: 0f
+                if (nombre.isNotEmpty()) {
+                    val nuevaActividad = Actividad(nombre = nombre, costo = costo)
+                    database.child("viajes").child(viajeId!!).child("actividades")
+                        .push().setValue(nuevaActividad)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Actividad agregada", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(
+                                this,
+                                "Error al agregar la actividad",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                } else {
+                    Toast.makeText(this, "Formato inválido", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Formato inválido", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun showRemoveActividadDialog(actividad: Actividad){
+        AlertDialog.Builder(this)
+            .setTitle("Eliminar Actividad")
+            .setMessage("¿Estás seguro de que quieres eliminar esta actividad?")
+            .setPositiveButton("Sí"){ _, _ ->
+                removeActividad(actividad)
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun removeActividad(actividad: Actividad){
+        database.child("viajes").child(viajeId!!).child("actividades")
+            .orderByChild("nombre").equalTo(actividad.nombre)
+            .addListenerForSingleValueEvent(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot){
+                    for (childSnapshot in snapshot.children){
+                        childSnapshot.ref.removeValue()
+                            .addOnSuccessListener {
+                                Toast.makeText(this@DetallesViaje, "Actividad eliminada", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener{
+                                Toast.makeText(this@DetallesViaje, "Error al eliminar la actividad", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                }
+                override fun onCancelled(error: DatabaseError){
+                    Toast.makeText(this@DetallesViaje, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
     private fun updateUI(viaje: Viaje) {
-        binding.txtDestino.text = viaje.destino
-        binding.txtFecha.text = viaje.fechaInicio
-        actividadesAdapter.updateActividades(viaje.actividades)
+        binding.txtDestino.text = viaje.destino ?: ""
+        binding.txtFecha.text = viaje.fechaInicio ?: ""
+        actividadesAdapter.updateActividades(viaje.actividades ?: emptyList())
 
         // Calcular días restantes
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())

@@ -74,11 +74,13 @@ class NuevoViaje : AppCompatActivity() {
         val viajeRef = database.getReference("viajes").push()
         val viajeId = viajeRef.key ?: return
 
+        val actividadesMap = actividades.associateBy { it.nombre }
+
         val viaje = Viaje(
             id = viajeId,
             userId = userId,
             destino = destino,
-            actividades = actividades,
+            actividades = actividadesMap,
             presupuestoEstimado = presupuesto,
             fechaInicio = fecha
         )

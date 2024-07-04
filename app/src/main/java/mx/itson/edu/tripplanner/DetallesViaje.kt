@@ -63,13 +63,13 @@ class DetallesViaje : AppCompatActivity() {
         binding.recyclerDetallesViajes.adapter = actividadesAdapter
     }
 
-    private fun initGraphs() {
-        binding.graphAlojamiento.background = CustomCircleDrawable(this, 64f, R.color.colorAlojamiento)
-        binding.graphTransporte.background = CustomCircleDrawable(this, 40f, R.color.colorTransporte)
-        binding.graphComidas.background = CustomCircleDrawable(this, 90f, R.color.colorComidas)
+    private fun initGraphs(){
+        binding.graphAlojamiento.background =  CustomCircleDrawable(this, 64f, R.color.verde)
+        binding.graphTransporte.background = CustomCircleDrawable(this, 40f, R.color.azult)
+        binding.graphComidas.background = CustomCircleDrawable(this, 90f, R.color.rojo)
     }
 
-    private fun loadViajeDetails() {
+    private fun loadViajeDetails(){
         database.child("viajes").child(viajeId!!).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val viaje = snapshot.getValue(Viaje::class.java)
@@ -92,14 +92,14 @@ class DetallesViaje : AppCompatActivity() {
         })
     }
 
-    private fun showAddActividadDialog() {
+    private fun showAddActividadDialog(){
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_actividad, null)
         val etActividad = dialogView.findViewById<EditText>(R.id.etActividad)
 
         AlertDialog.Builder(this)
             .setTitle("Agregar Actividad")
             .setView(dialogView)
-            .setPositiveButton("Agregar") { _, _ ->
+            .setPositiveButton("Agregar"){ _, _ ->
                 val input = etActividad.text.toString()
                 addNewActividad(input)
             }
@@ -109,59 +109,54 @@ class DetallesViaje : AppCompatActivity() {
 
     private fun addNewActividad(input: String) {
         val parts = input.split(":")
-        if (parts.size == 2) {
+        if (parts.size == 2){
             val nombre = parts[0].trim()
             val costo = parts[1].trim().toFloatOrNull() ?: 0f
-            if (nombre.isNotEmpty()) {
+            if (nombre.isNotEmpty()){
                 val nuevaActividad = Actividad(nombre = nombre, costo = costo)
-                database.child("viajes").child(viajeId!!).child("actividades")
-                    .push().setValue(nuevaActividad)
+                val actividadId = database.child("viajes").child(viajeId!!).child("actividades").push().key ?: return
+                database.child("viajes").child(viajeId!!).child("actividades").child(actividadId).setValue(nuevaActividad)
                     .addOnSuccessListener {
                         Toast.makeText(this, "Actividad agregada", Toast.LENGTH_SHORT).show()
                     }
-                    .addOnFailureListener {
-                        Toast.makeText(
-                            this,
-                            "Error al agregar la actividad",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    .addOnFailureListener{
+                        Toast.makeText(this, "Error al agregar la actividad", Toast.LENGTH_SHORT).show()
                     }
-            } else {
+            } else{
                 Toast.makeText(this, "Formato inválido", Toast.LENGTH_SHORT).show()
             }
-        } else {
+        } else{
             Toast.makeText(this, "Formato inválido", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun showRemoveActividadDialog(actividad: Actividad) {
+    private fun showRemoveActividadDialog(actividad: Actividad){
         AlertDialog.Builder(this)
             .setTitle("Eliminar Actividad")
             .setMessage("¿Estás seguro de que quieres eliminar esta actividad?")
-            .setPositiveButton("Sí") { _, _ ->
+            .setPositiveButton("Sí"){ _, _ ->
                 removeActividad(actividad)
             }
             .setNegativeButton("No", null)
             .show()
     }
 
-    private fun removeActividad(actividad: Actividad) {
+    private fun removeActividad(actividad: Actividad){
         database.child("viajes").child(viajeId!!).child("actividades")
             .orderByChild("nombre").equalTo(actividad.nombre)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (childSnapshot in snapshot.children) {
+            .addListenerForSingleValueEvent(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot){
+                    for (childSnapshot in snapshot.children){
                         childSnapshot.ref.removeValue()
                             .addOnSuccessListener {
                                 Toast.makeText(this@DetallesViaje, "Actividad eliminada", Toast.LENGTH_SHORT).show()
                             }
-                            .addOnFailureListener {
+                            .addOnFailureListener{
                                 Toast.makeText(this@DetallesViaje, "Error al eliminar la actividad", Toast.LENGTH_SHORT).show()
                             }
                     }
                 }
-
-                override fun onCancelled(error: DatabaseError) {
+                override fun onCancelled(error: DatabaseError){
                     Toast.makeText(this@DetallesViaje, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
                 }
             })
@@ -170,22 +165,15 @@ class DetallesViaje : AppCompatActivity() {
     private fun updateUI(viaje: Viaje) {
         binding.txtDestino.text = viaje.destino ?: ""
         binding.txtFecha.text = viaje.fechaInicio ?: ""
-        actividadesAdapter.updateActividades(viaje.actividades ?: emptyList())
+        actividadesAdapter.updateActividades(viaje.actividades.values.toList())
 
+        // Calcular días restantes
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val fechaInicio = viaje.fechaInicio?.let {
-            sdf.parse(it)
-        }
-
-        if (fechaInicio != null) {
-            val today = Calendar.getInstance()
-            val startDate = Calendar.getInstance().apply { time = fechaInicio }
-
-            val diffInMillis = startDate.timeInMillis - today.timeInMillis
-            val diffInDays = (diffInMillis / (1000 * 60 * 60 * 24)).toInt()
-
-            val daysCorrected = diffInDays
-            binding.diasRestantes.text = daysCorrected.toString()
-        }
+        val fechaInicio = sdf.parse(viaje.fechaInicio)
+        val diasRestantes = ((fechaInicio?.time ?: 0) - System.currentTimeMillis()) / (1000 * 60 * 60 * 24)
+        binding.diasRestantes.text = diasRestantes.toInt().toString()
     }
+
+
+
 }

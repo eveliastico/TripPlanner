@@ -62,7 +62,10 @@ class MisViajes : AppCompatActivity() {
                 val viajes = mutableListOf<Viaje>()
                 for (viajeSnapshot in snapshot.children){
                     val viaje = viajeSnapshot.getValue(Viaje::class.java)
-                    viaje?.let { viajes.add(it) }
+                    viaje?.let {
+                        it.id = viajeSnapshot.key ?: ""
+                        viajes.add(it)
+                    }
                 }
                 viajesAdapter.updateViajes(viajes)
             }

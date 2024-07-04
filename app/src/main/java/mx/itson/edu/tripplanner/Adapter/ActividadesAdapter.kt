@@ -24,7 +24,7 @@ class ActividadesAdapter(
     override fun getItemCount() = actividades.size
 
     fun updateActividades(newActividades: List<Actividad>) {
-        actividades = newActividades.toList()
+        actividades = newActividades
         notifyDataSetChanged()
     }
 

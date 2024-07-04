@@ -1,6 +1,6 @@
 package mx.itson.edu.tripplanner.DataClass
 
 data class Actividad(
-    val nombre:String,
-    val costo: Float
+    val nombre:String = "",
+    val costo: Float = 0f
 )

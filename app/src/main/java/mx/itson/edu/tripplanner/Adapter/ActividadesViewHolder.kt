@@ -6,15 +6,16 @@ import androidx.recyclerview.widget.RecyclerView
 import mx.itson.edu.tripplanner.DataClass.Actividad
 import mx.itson.edu.tripplanner.R
 import mx.itson.edu.tripplanner.databinding.ItemActividadBinding
+import org.w3c.dom.Text
 
 class ActividadesViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
-    val actividad = view.findViewById<TextView>(R.id.txtActividad)
-    val costo = view.findViewById<TextView>(R.id.txtCosto)
+    private val actividad = view.findViewById<TextView>(R.id.txtActividad)
+    private val costo = view.findViewById<TextView>(R.id.txtCosto)
 
-    fun render(actvidadModel: Actividad){
-        actividad.text = actvidadModel.nombre
-        costo.text = actvidadModel.costo.toString()
+    fun render(actividadModel: Actividad) {
+        actividad.text = actividadModel.nombre
+        costo.text = actividadModel.costo.toString()
     }
 
 }

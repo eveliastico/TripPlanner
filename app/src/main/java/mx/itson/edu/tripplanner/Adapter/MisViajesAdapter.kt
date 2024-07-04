@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import mx.itson.edu.tripplanner.DataClass.Viaje
 import mx.itson.edu.tripplanner.R
 
-class MisViajesAdapter(private val viajesList:List<Viaje>, private val onClickListener:(Viaje)-> Unit ) : RecyclerView.Adapter<MisViajesViewHolder>() {
+class MisViajesAdapter(private var viajesList: List<Viaje>, private val onClickListener: (Viaje) -> Unit ) : RecyclerView.Adapter<MisViajesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MisViajesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -22,5 +22,10 @@ class MisViajesAdapter(private val viajesList:List<Viaje>, private val onClickLi
     override fun onBindViewHolder(holder: MisViajesViewHolder, position: Int) {
         val item = viajesList[position]
         holder.render(item, onClickListener)
+    }
+
+    fun updateViajes(newViajes: List<Viaje>) {
+        viajesList = newViajes
+        notifyDataSetChanged()
     }
 }

@@ -10,10 +10,10 @@ import mx.itson.edu.tripplanner.databinding.ItemActividadBinding
 import org.w3c.dom.Text
 
 class ActividadesViewHolder(
-    view: View,
-    private val onRemoveClick: (Actividad) -> Unit,
-    private val onAddClick: () -> Unit
-):RecyclerView.ViewHolder(view) {
+        view: View,
+        private val onRemoveClick: (Actividad) -> Unit,
+        private val onAddClick: () -> Unit
+    ):RecyclerView.ViewHolder(view) {
 
     private val txtActividad: TextView = view.findViewById(R.id.txtActividad)
     private val txtCosto: TextView = view.findViewById(R.id.txtCosto)

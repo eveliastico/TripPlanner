@@ -5,9 +5,10 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 data class Viaje(
-    var id: Long,
-    var destino:String,
-    var actividades: List<Actividad>,
-    var presupuestoEstimado:Float,
-    var fechaInicio:LocalDate
+    var id: String = "",
+    var userId: String = "",
+    var destino:String = "",
+    var actividades: List<Actividad> = listOf(),
+    var presupuestoEstimado:Float = 0f,
+    var fechaInicio: String = ""
 )

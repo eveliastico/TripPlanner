@@ -63,6 +63,13 @@
         </FrameLayout>
 
     </ScrollView>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtActividades"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ej: Museo:50, Restaurante:100, etc..."  />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:layout_width="match_parent"

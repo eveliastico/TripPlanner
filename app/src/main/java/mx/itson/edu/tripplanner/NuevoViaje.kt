@@ -7,38 +7,36 @@ import android.widget.Button
 import android.widget.CalendarView
 import android.widget.EditText
 import android.widget.ImageButton
+import androidx.recyclerview.widget.LinearLayoutManager
+import mx.itson.edu.tripplanner.Adapter.MisViajesAdapter
+import mx.itson.edu.tripplanner.Adapter.NuevaActividadAdapter
+import mx.itson.edu.tripplanner.DataProvider.ActividadesProvider
+import mx.itson.edu.tripplanner.DataProvider.ViajesProvider
+import mx.itson.edu.tripplanner.databinding.ActivityNuevoViajeBinding
 import java.time.LocalDate
 
 class NuevoViaje : AppCompatActivity() {
 
-    lateinit var etDate: EditText
-    lateinit var btnGuardar: Button
+    private lateinit var binding: ActivityNuevoViajeBinding
+
+//    lateinit var etDate: EditText
+//    lateinit var btnGuardar: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nuevo_viaje)
+        binding = ActivityNuevoViajeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        etDate = findViewById(R.id.etDate)
-
-        etDate.setOnClickListener {
-            showDatePickerDialog()
-        }
-
-        btnGuardar= findViewById(R.id.btn_guardarViaje)
-
-        btnGuardar.setOnClickListener{
+        binding.btnGuardarViaje.setOnClickListener{
             var intent: Intent = Intent(this, DetallesViaje::class.java)
             startActivity(intent)
         }
 
     }
 
-    private fun showDatePickerDialog() {
-        val datePicker = DatePickerFragment { day, month, year -> onDateSelected(day, month, year) }
-        datePicker.show(supportFragmentManager, "datePicker")
-    }
-
-    private fun onDateSelected(day: Int, month: Int, year: Int) {
-        etDate.setText("$day/$month/$year")
+    fun initRecyclerView(){
+        binding.recyclerActividades.layoutManager = LinearLayoutManager(this)
+        binding.recyclerActividades.adapter =
+            NuevaActividadAdapter(ActividadesProvider.actividadesPlaneadasList)
     }
 }

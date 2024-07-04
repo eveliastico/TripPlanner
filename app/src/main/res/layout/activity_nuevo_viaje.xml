@@ -46,18 +46,23 @@
         android:text="@string/actividades"
         android:textSize="15dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        >
+        android:layout_height="200dp"
+        android:layout_marginHorizontal="20dp">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerActividades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </FrameLayout>
+
+    </ScrollView>
 
     <TextView
         android:layout_width="match_parent"

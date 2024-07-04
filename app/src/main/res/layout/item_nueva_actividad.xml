@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <TextView
+    <EditText
         android:id="@+id/txtActividad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         android:maxLines="1"
         android:textStyle="normal"/>
 
-    <TextView
+    <EditText
         android:id="@+id/txtCosto"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
@@ -29,6 +29,26 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textStyle="normal"/>
+
+    <ImageButton
+        android:id="@+id/btnAddActividad"
+        android:layout_width="5dp"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_add"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Añadir viaje"/>
+
+    <ImageButton
+        android:id="@+id/btnRemoveActividad"
+        android:layout_width="5dp"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_remove"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Añadir viaje"/>
 
 
 </LinearLayout>

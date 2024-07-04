@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId = "mx.itson.edu.tripplanner"
         minSdk = 26
-        targetSdk = 31
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
